@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<title>Admin Dasboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">   
+<style>
+
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+ 
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+} 
+
+button
+{
+   background-color: transparent;
+   border: none;
+
+}
+* {
+  box-sizing: border-box;
+}
+.rounded{
+  border-radius: 7px;
+}
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=number], input[type=week],select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 7px;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=week]:focus, select:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+a {
+  color: dodgerblue;
+} 
+
+.media-body
+{ 
+  color: #04AA6D;
+  text-decoration: none;
+}
+.btn-user:hover
+{
+  text-decoration:  none;
+}
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.closebtn:hover {
+  color: black;
+}
+
+</style>
+<body class="w3-light-grey">
+   
+<div class="w3-bar w3-black w3-padding-large">
+  <a href="/" class="w3-bar-item w3-button rounded"><b>ADMIN DASHBOARD</b></a> 
+  <div class="w3-dropdown-hover w3-right">
+    <button class="w3-button w3-black"><b><%= email %></b></button>
+    <img class="mr-2 w3-circle" src="/img/avatar.jpg" width="40" height="40" alt="avatar">
+   
+    <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+      <a onclick="document.getElementById('edit-profile').style.display='block'" class="w3-bar-item w3-button w3-padding-large">Edit profile</a>
+      <!-- #region for edit profile of user--> 
+        <div id="edit-profile" class="w3-modal">
+          <div class="w3-modal-content w3-card-4">
+            <form action="#">
+                <header class="w3-container w3-teal">
+                  <span onclick="document.getElementById('edit-profile').style.display='none'"
+                  class="w3-button w3-display-topright w3-xlarge">&times;</span>
+                  <h2>EDIT PROFILE</h2>
+                </header>
+                <div class="container">
+                  <label for="name"><b>Username</b></label>
+                  <input type="text" value="current_name" name="name" id="name" required>
+                  <label for="about"><b>Description</b></label>
+                  <input type="text" placeholder="Enter course description" name="about" id="about" required> 
+                  <button type="submit" class="registerbtn">Edit profile</button>
+                </div>
+                 
+            </form>
+          </div>
+        </div> 
+      <a class="w3-bar-item w3-button w3-padding-large" onclick="logoutHandler()">Log out</a> 
+    </div>
+  </div>
+  <div class="w3-clear"></div>
+</div>
+<!-- alert -->
+<div class="alert" id="aler" >
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <div id="text"></div> 
+</div>
+
+<!-- #region student details-->
+<div class="w3-content" style="max-width:1400px"> 
+  <div class="w3-container"> 
+   <div class="container">
+      <button type="submit" id="student" onclick="addUsers(0);" class="w3-button w3-black w3-round">ADD STUDENT</button>
+      <button type="submit" id="teacher" onclick="addUsers(1);" class="w3-button w3-green w3-round">ADD TEACHER</button>
+      <button type="submit" id="admin" onclick="addUsers(2);" class="w3-button w3-red w3-round">ADD ADMIN</button> 
+    </div>
+    <iframe name="iframe1" id="iframe1" src="https://docs.google.com/spreadsheets/d/1ccBcitFFoHbNeP_zQ9FS1ScIVNUbhP-QOD7QkXBue9w/edit?usp=sharing" 
+        frameborder="0" cellspacing="0"
+        style="border-style: none;width: 100%; height: 80vh;"></iframe>
+
+    <!-- <table class="w3-table-all w3-margin-top" id="myTable">
+      <tr>
+        <th style="width:7%;"><input type="checkbox" id="check-all" class="w3-check"></th>
+        <th style="width:33%;">Name</th>
+        <th style="width:30%;">roll no</th>
+        <th style="width:30%;">credits</th>
+      </tr> 
+    </table>  -->
+  </div>
+  
+</body>
+<script> 
+  var msg= "";
+  var aler = document.getElementById("aler"); 
+  aler.style.display= "none"; 
+  const text = document.getElementById('text'); 
+
+    async function handleError(res){
+      if(!res.ok){
+        res = await res.json()
+        throw new Error(res.msg)
+      }
+      else return res.json()
+    }
+
+    function logoutHandler(){
+      fetch('/logout')
+      .then(handleError)
+      .then(res => {
+        window.location.href = "/login" 
+
+      })
+      .catch(err => {
+        console.log(err);
+        aler.style.display="block"; 
+        text.style.display="block"; 
+        aler.style.backgroundColor="red";
+        text.innerHTML = "<strong>Danger!</strong>       "+err;
+      })
+    }
+
+    function addUsers(type){
+      fetch("/admin/adduser",{
+        method: "POST",
+        headers: {
+          "Content-Type" : 'application/json'
+        },
+        body: JSON.stringify({type: type})
+      })
+      .then(handleError)
+      .then(res => {
+        console.log(res);
+        msg = "<strong>Success!</strong>   Successfully been enrolled on the course";
+            aler.style.display = 'block';
+            aler.style.backgroundColor="green"; 
+            text.style.display="block";
+            text.innerHTML = msg;  
+      })
+      .catch(err => {
+        console.log(err);
+        aler.style.display="block"; 
+        text.style.display="block"; 
+        aler.style.backgroundColor="red";
+        text.innerHTML = "<strong>Danger!</strong>       "+err;
+      })
+    }
+  
+</script>
+</html>

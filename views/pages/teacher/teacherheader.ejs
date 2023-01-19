@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html> 
+<title>Teacher Dasboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">   
+<style>
+    body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    .add-icon{
+        position: fixed;
+        bottom: 2.5%;
+        right: 2.5%;
+        z-index: 2; 
+    }
+    
+    /* Add padding to containers */
+    .container {
+      padding: 16px;
+      background-color: white;
+    }
+    
+    .material-icons
+    {
+        font-size: 4rem; 
+        color: cadetblue;
+        cursor: pointer;
+    }
+    button
+    {
+       background-color: transparent;
+       border: none;
+    
+    }
+    * {
+      box-sizing: border-box;
+    }
+    .rounded{
+      border-radius: 7px;
+    }
+    /* Full-width input fields */
+    input[type=text], input[type=password], input[type=number], input[type=week],select {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      display: inline-block;
+      border: none;
+      background: #f1f1f1;
+      border-radius: 7px;
+    }
+    
+    input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=week]:focus, select:focus{
+      background-color: #ddd;
+      outline: none;
+    }
+    
+    /* Overwrite default styles of hr */
+    hr {
+      border: 1px solid #f1f1f1;
+      margin-bottom: 25px;
+    }
+    
+    /* Set a style for the submit button */
+    .registerbtn {
+      background-color: #04AA6D;
+      color: white;
+      padding: 16px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      opacity: 0.9;
+    }
+    
+    .registerbtn:hover {
+      opacity: 1;
+    }
+    a {
+       text-decoration: none;
+    }
+    .signin {
+      background-color: #f1f1f1;
+      text-align: center;
+      appearance: none;
+    }
+    
+    .media-body
+    { 
+      color: #04AA6D;
+      text-decoration: none;
+    }
+    .btn-user:hover
+    {
+      text-decoration:  none;
+    } 
+    .alert {
+      padding: 20px;
+      background-color: green;
+      color: white;
+    }
+    
+    .closebtn {
+      margin-left: 15px;
+      color: white;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    
+    .closebtn:hover {
+      color: black;
+    }
+    
+    .notification {  
+      text-decoration: none; 
+      position: relative;
+      display: inline-block; 
+      border-radius: 2px;
+    }
+    
+    .notification .badge { 
+      text-align: center;
+      display : block; 
+      position: absolute; 
+      top : 10px;
+      right: 3px;
+      padding: 1px 8px;
+      border-radius: 50%;
+      background-color: rgb(83, 84, 87);
+      color: white;
+    }
+</style>
+    <body class="w3-light-grey">
+        <div class="add-icon">
+            <button onclick="newCourse();" >
+                <span class="material-icons">
+                    add_circle
+                </span>
+            </button>
+          </div> 
+      <div id="id01" class="w3-modal">
+        <div class="w3-modal-content w3-card-4">
+          <form id="course_form" onsubmit="formSubmitHandler(event);">
+              <header class="w3-container w3-teal">
+                <span onclick="document.getElementById('id01').style.display='none'"
+                class="w3-button w3-display-topright w3-xlarge">&times;</span>
+                <h2 id="form-title">COURSE CREATION</h2>
+              </header>
+              <div class="container">
+                <label for="course_name"><b>Course Name</b></label>
+                <input type="text" placeholder="Course Name" name="course_name" id="course_name" required>
+                <!-- <label for="Course Id"><b>Course Id</b></label>
+                <input type="text" placeholder="Course Id" value="NA" name="course_id" required> -->
+                <label for="about"><b>Description</b></label>
+                <input type="text" placeholder="Course Description" name="about" id="about" required>
+                <label for="credits"><b>Credits</b></label>
+                <input type="number" placeholder="Course Credits" name="credits" id="credits" required>
+                <label for="sem"><b>Semester</b></label>
+                <input type="number" placeholder="Semester" name="sem" id="sem" required>
+                <label for="Fees"><b>Fees</b></label>
+                <input type="number" placeholder="Fees" name="fees" required>
+                <label for="maxcount"><b>Maximum Capacity</b></label>
+                <input type="number" placeholder="Capacity" name="count" required>
+                <label for="faculty_type"><b>Faculty-type</b></label>
+                <div class="w3-row-padding ">
+                  <p class=" w3-half">
+                    <input class="w3-radio" type="radio" name="type" value="internal" checked>
+                    <label>Internal</label></p>
+                    <p  class=" w3-half">
+                    <input class="w3-radio" type="radio" name="type" value="external">
+                    <label>External</label></p>
+                </div>
+                <label for="duration"><b>Duration [In months]</b></label>
+                <select name="weeksDuration" id="duration">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <button type="submit" id="form-button" class="registerbtn rounded">Submit</button>
+              </div>
+              
+              <footer class="w3-container w3-teal">
+                <p>please verify before submission</p>
+              </footer>
+          </form>
+        </div>
+      </div> 
+    <div class="w3-bar w3-black w3-padding-large">
+      <a href="/" class="w3-bar-item w3-button rounded"><b>TEACHERS DASHBOARD</b></a> 
+      <div class="w3-dropdown-hover w3-right">
+        <button class="w3-button w3-black rounded"><b><%=email%></b></button>
+        <img class="mr-2 w3-circle" src="/img/avatar.jpg" width="40" height="40" alt="avatar">
+       
+        <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+          <a onclick="document.getElementById('edit-profile').style.display='block'" class="w3-bar-item w3-button w3-padding-large">Edit profile</a>
+          <!-- #region for edit profile of user--> 
+            <div id="edit-profile" class="w3-modal">
+              <div class="w3-modal-content w3-card-4">
+                <form action="#">
+                    <header class="w3-container w3-teal">
+                      <span onclick="document.getElementById('edit-profile').style.display='none'"
+                      class="w3-button w3-display-topright w3-xlarge">&times;</span>
+                      <h2>EDIT PROFILE</h2>
+                    </header>
+                    <div class="container">
+                      <label for="name"><b>Username</b></label>
+                      <input type="text" value="current_name" name="name" id="name" required>
+                      <label for="about"><b>Description</b></label>
+                      <input type="text" placeholder="Enter course description" name="about" id="about" required> 
+                      <button type="submit" class="registerbtn">Edit profile</button>
+                    </div>
+                     
+                </form>
+              </div>
+            </div> 
+          <a class="w3-bar-item w3-button w3-padding-large notification">
+              <span> Course Taught</span><span class="badge" id="totcompleted"></span>          
+          <a onclick="document.getElementById('').style.display='block'" class="w3-bar-item w3-button w3-padding-large notification">
+            <span> Course Active</span><span class="badge" id="totActive"></span>
+          </a>
+    
+          <a class="w3-bar-item w3-button w3-padding-large" onclick="logoutHandler()">Log out</a> 
+        </div>
+      </div>
+    
+      <div class="w3-clear"></div>
+    </div>

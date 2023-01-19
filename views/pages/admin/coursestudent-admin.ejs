@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<title>Admin Dasboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">   
+<style>
+
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif} 
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+.material-icons
+{
+    font-size: 4rem; 
+    color: cadetblue;
+    cursor: pointer;
+}
+button
+{
+   background-color: transparent;
+   border: none;
+
+}
+* {
+  box-sizing: border-box;
+}
+.rounded{
+  border-radius: 7px;
+}
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=number], input[type=week],select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 7px;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=week]:focus, select:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+a {
+  color: dodgerblue;
+}
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+  appearance: none;
+}
+
+.media-body
+{ 
+  color: #04AA6D;
+  text-decoration: none;
+}
+.btn-user:hover
+{
+  text-decoration:  none;
+} 
+</style>
+<body class="w3-light-grey"> 
+  
+<div class="w3-bar w3-black w3-padding-large">
+  <a href="/" class="w3-bar-item w3-button rounded"><b>ADMIN DASHBOARD</b></a> 
+  <div class="w3-dropdown-hover w3-right">
+    <button class="w3-button w3-black"><b><%= email %></b></button>
+    <img class="mr-2 w3-circle" src="/img/avatar.jpg" width="40" height="40" alt="avatar">
+   
+    <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+      <a onclick="document.getElementById('edit-profile').style.display='block'" class="w3-bar-item w3-button w3-padding-large">Edit profile</a>
+      <!-- #region for edit profile of user--> 
+        <div id="edit-profile" class="w3-modal">
+          <div class="w3-modal-content w3-card-4">
+            <form action="#">
+                <header class="w3-container w3-teal">
+                  <span onclick="document.getElementById('edit-profile').style.display='none'"
+                  class="w3-button w3-display-topright w3-xlarge">&times;</span>
+                  <h2>EDIT PROFILE</h2>
+                </header>
+                <div class="container">
+                  <label for="name"><b>Username</b></label>
+                  <input type="text" value="current_name" name="name" id="name" required>
+                  <label for="about"><b>Description</b></label>
+                  <input type="text" placeholder="Enter course description" name="about" id="about" required> 
+                  <button type="submit" class="registerbtn">Edit profile</button>
+                </div>
+                 
+            </form>
+          </div>
+        </div> 
+      <a class="w3-bar-item w3-button w3-padding-large" onclick="logoutHandler()">Log out</a> 
+    </div>
+  </div>
+
+  <div class="w3-clear"></div>
+</div>
+
+<!-- #region student details-->
+<div class="w3-content" style="max-width:1400px"> 
+  <div class="w3-container">
+    <h2><%=course_name%></h2>
+    <p id="course_code"><%=course_id%></p>
+    <p><%= staffEmail%></p>
+  
+    <input autofocus class="w3-input w3-border w3-padding" type="text" placeholder="Search for names.." id="myInput" onkeyup="myFunction()">
+    <table class="w3-table-all w3-margin-top" id="myTable">
+      <tr> 
+        <th style="width:20%;">Roll No</th>
+        <th style="width:20%;">Name</th>
+        <th style="width:20%;">Email</th>
+        <th style="width:20%;">Semester</th>
+        <th style="width:20%;">Marks</th>
+      </tr> 
+    </table> 
+  </div>
+</body>
+<script>  
+    const modal1 = document.getElementById('edit');
+    const modal2 = document.getElementById('edit-profile');
+    const course_code = document.getElementById('course_code').innerHTML;
+    const table = document.getElementById("myTable");
+    const checkAll = document.getElementById("check-all");
+
+    let students = [];
+    fetchStudents();
+
+    function fetchStudents(){
+      console.log(course_code)
+      fetch(`/course/admin/detail/${course_code}`,{
+        method: 'POST'
+      })
+      .then(handleError)
+      .then(res => {
+        students = res.results;
+        renderTable(students)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+
+    function renderTable(students){
+      students.forEach((student,i) => {
+        let row = table.insertRow(i+1);
+        let cell2 = row.insertCell(0);
+        let cell3 = row.insertCell(1);
+        let cell4 = row.insertCell(2);
+        let cell5 = row.insertCell(3);
+        let cell6 = row.insertCell(4);
+        cell2.textContent = student.rollno;
+        cell3.textContent = student.name;
+        cell4.textContent = student.email;
+        cell5.textContent = student.sem;
+        cell6.textContent = student.marks;
+      });
+    }
+     
+    window.onclick = function(event) {
+      if (event.target == modal || event.target == modal1 || event.target==modal2) {
+        modal.style.display = "none";
+        modal1.style.display = "none";
+        modal2.style.display = "none";
+      }
+    }
+
+    async function handleError(res){
+      if(!res.ok){
+        res = await res.json()
+        throw new Error(res.msg)
+      }
+      else return res.json()
+    }
+
+    function logoutHandler(){
+      fetch('/logout')
+      .then(handleError)
+      .then(res => {
+        window.location.href = "/login"
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+
+    ///////////for filterring table
+  function myFunction() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+</html>

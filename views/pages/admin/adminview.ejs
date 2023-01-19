@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<title>ADMIN yearly view Dasboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">   
+<style>
+
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+.material-icons
+{
+    font-size: 4rem; 
+    color: cadetblue;
+    cursor: pointer;
+}
+button
+{
+   background-color: transparent;
+   border: none;
+
+}
+* {
+  box-sizing: border-box;
+}
+.rounded{
+  border-radius: 7px;
+}
+/* Full-width input fields */
+input[type=text], input[type=number], select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 7px;
+}
+
+input[type=text]:focus, input[type=number]:focus, select:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+</style> 
+<div class="w3-bar w3-black w3-padding-large">
+    <a href="/" class="w3-bar-item w3-button rounded"><b>ADMIN DASHBOARD</b></a> 
+    <div class="w3-dropdown-hover w3-right">
+      <button class="w3-button w3-black rounded"><b><%=email%></b></button>
+      <img class="mr-2 w3-circle" src="/img/avatar.jpg" width="40" height="40" alt="avatar">
+     
+      <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+        <a onclick="document.getElementById('edit-profile').style.display='block'" class="w3-bar-item w3-button w3-padding-large">Edit profile</a>
+        <!-- #region for edit profile of user--> 
+          <div id="edit-profile" class="w3-modal">
+            <div class="w3-modal-content w3-card-4">
+              <form action="#">
+                  <header class="w3-container w3-teal">
+                    <span onclick="document.getElementById('edit-profile').style.display='none'"
+                    class="w3-button w3-display-topright w3-xlarge">&times;</span>
+                    <h2>EDIT PROFILE</h2>
+                  </header>
+                  <div class="container">
+                    <label for="name"><b>Username</b></label>
+                    <input type="text" value="current_name" name="name" id="name" required>
+                    <label for="about"><b>Description</b></label>
+                    <input type="text" placeholder="Enter course description" name="about" id="about" required> 
+                    <button type="submit" class="registerbtn">Edit profile</button>
+                  </div>
+                   
+              </form>
+            </div>
+          </div> 
+        <a class="w3-bar-item w3-button w3-padding-large" onclick="logoutHandler()">Log out</a> 
+      </div>
+    </div>
+    
+  <div class="w3-clear"></div>
+</div>
+
+<div class="w3-row">
+    <div class="w3-threequarter">
+        <div id="assigned" class="w3-container w3-border city">
+            <!-- <div class="w3-col container">     
+                <div class="w3-card-4 w3-margin w3-white"> 
+                    <div class="w3-container">
+                    <h3><b>BLOG ENTRY</b></h3>
+                    <h5>Title description, <span class="w3-opacity">April 2, 2014</span></h5>
+                    </div>
+            
+                    <div class="w3-container">
+                    <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed
+                        tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                    <div class="w3-row">
+                        <div class="w3-col m8 s12">
+                        <p><button class="w3-button w3-padding-large w3-white w3-border float-right"><b>PROPOSE »</b></button></p>
+                        </div> 
+                    </div>
+                    </div>
+              </div> 
+            </div> -->
+            <!-- <div class="w3-col container s12">     
+              <div class="w3-card-4 w3-margin w3-white"> 
+                  <div class="w3-container">
+                  <h3><b>BLOG ENTRY</b></h3>
+                  <h5>Title description, <span class="w3-opacity">April 2, 2014</span></h5>
+                  </div>
+          
+                  <div class="w3-container">
+                  <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed
+                      tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                  <div class="w3-row">
+                      <div class="w3-col m8 s12">
+                      <p><button class="w3-button w3-padding-large w3-white w3-border float-right"><b>PROPOSE »</b></button></p>
+                      </div> 
+                  </div>
+                  </div>
+            </div> 
+          </div> -->
+        </div>
+    </div>
+    <div class="w3-container w3-quarter"> <br>
+      <div class="w3-container w3-border w3-round-large">
+        <p class="w3-half">
+          <input class="w3-check" id="act" onchange="renderCourses();" type="checkbox" checked="checked">
+          <label>ACTIVE</label></p>
+          <p class="w3-half">
+            <input class="w3-check" id="nact" onchange="renderCourses();" type="checkbox" checked="checked">
+            <label>IN-ACTIVE</label></p> 
+      </div> 
+      <br>
+      <div class="w3-container w3-border w3-round-large">
+        <p class="w3-half">
+          <input class="w3-check" id="appr" type="checkbox" onchange="renderCourses();" checked="checked">
+          <label>APPROVED</label></p>
+          <p class="w3-half">
+            <input class="w3-check" id="nappr" onchange="renderCourses();" type="checkbox" checked="checked">
+            <label>NOT APPROVED</label></p> 
+      </div>
+        <p>
+          <label>Search by Year:</label>
+          <input id="year" onkeyup="renderCourses()" class="w3-input w3-border w3-round-large" placeholder="eg: 2023" type="text" max="2099" step="1"></p>
+          <p>
+            <label>Filter by Sem:</label>
+            <input id="sem" onkeyup="renderCourses()" class="w3-input w3-border w3-round-large" placeholder="eg: 8" type="text" min="1" max="8" step="1" ></p>
+    </div>
+  </div>
+  
+  
+</body> 
+<script>
+  let courses = [];
+  const assignedTab = document.getElementById('assigned')
+  const appr = document.getElementById('appr');
+  const nappr = document.getElementById('nappr');
+  const act = document.getElementById('act');
+  const nact = document.getElementById('nact');
+  const sem = document.getElementById('sem');
+  const year = document.getElementById('year');
+  
+  fetchCourses();
+
+  function logoutHandler(){
+    fetch('/logout')
+    .then(handleError)
+    .then(res => {
+      window.location.replace('/login');
+    })
+    .catch(err => {
+      console.log("Error: "+err);
+    })
+  }
+
+  async function handleError(res){
+      if(!res.ok){
+        res = await res.json()
+        throw new Error(res.msg)
+      }
+      else return res.json()
+    }
+    function checkCourse(course_id){
+      if(course_id !== 'NA'){
+        return `<div class="w3-row">
+                            <div class="w3-col m8 s12">
+                            <p><button class="w3-button w3-padding-large w3-white w3-border float-right rounded"
+                              onclick="window.location.href='/course/admin/detail/${course_id}'"><b>VIEW »</b></button></p>
+                            </div> 
+                        </div>`
+      }
+      
+      return ``
+    }
+
+  function fetchCourses(){
+    fetch("/course/all",{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(handleError)
+    .then(res => {
+      courses = res.courses;
+      let content = "";
+      courses.forEach(course => {
+      content += `<div class="w3-col container">     
+                <div class="w3-card-4 w3-margin w3-white"> 
+                    <div class="w3-container">
+                    <h3><b>${course.course_name}</b></h3>
+                    <h5>${course.course_id}<br> <span class="w3-opacity">  Credits : ${course.credits}  / Sem : ${course.sem}</span></h5>
+                    </div>            
+                    <div class="w3-container">
+                    <p>${course.about.substring(0,500) + "..."}</p>
+                    ${checkCourse(course.course_id)}
+                    </div>
+              </div> 
+            </div>`
+      })
+      assignedTab.innerHTML = content
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  function renderAll(){
+    let content = "";
+    courses.forEach(course => {
+      if(year.value !== "" && parseInt(year.value) !== course.course_year)
+          return;
+        if(sem.value !== "" && parseInt(sem.value) !== course.sem)
+          return;
+        content += `<div class="w3-col container">     
+                <div class="w3-card-4 w3-margin w3-white"> 
+                    <div class="w3-container">
+                    <h3><b>${course.course_name}</b></h3>
+                    <h5>${course.course_id}<br> <span class="w3-opacity">  Credits : ${course.credits}  / Sem : ${course.sem}</span></h5>
+                    </div>
+            
+                    <div class="w3-container">
+                    <p>${course.about.substring(0,500) + "..."}</p>
+                    ${checkCourse(course.course_id)}
+                    </div>
+              </div> 
+            </div>`
+      })
+      assignedTab.innerHTML = content
+  }
+
+
+  function renderCourses(){
+    assignedTab.innerHTML = ``;
+    if(appr.checked && nappr.checked && act.checked && nact.checked)
+    renderAll();
+    else if(!appr.checked && !nappr.checked && !act.checked && !nact.checked)
+    renderAll();
+    else{
+      let content = "";
+      courses.forEach(course => {
+        // if they want only approved courses
+        if(!appr.checked && course.course_id !== 'NA')
+          return;
+        if(!nappr.checked && course.course_id === 'NA')
+          return;
+        if(!act.checked && course.isActive === 1)
+          return;
+        if(!nact.checked && course.isActive !== 1)
+          return;
+          if(year.value !== "" && parseInt(year.value) !== course.course_year)
+          return;
+        if(sem.value !== "" && parseInt(sem.value) !== course.sem)
+          return;
+
+          content += `<div class="w3-col container">     
+                <div class="w3-card-4 w3-margin w3-white"> 
+                    <div class="w3-container">
+                    <h3><b>${course.course_name}</b></h3>
+                    <h5>${course.course_id}<br> <span class="w3-opacity">  Credits : ${course.credits}  / Sem : ${course.sem}</span></h5>
+                    </div>
+            
+                    <div class="w3-container">
+                      
+                    <p>${course.about.substring(0,500) + "..."}</p>
+                    ${checkCourse(course.course_id)}
+                    </div>
+              </div> 
+            </div>`
+      })
+      assignedTab.innerHTML = content
+    }
+  }
+</script>
+</html>

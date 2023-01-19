@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<title>Admin Dasboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">   
+<style>
+
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif} 
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+.material-icons
+{
+    font-size: 4rem; 
+    color: cadetblue;
+    cursor: pointer;
+}
+button
+{
+   background-color: transparent;
+   border: none;
+
+}
+* {
+  box-sizing: border-box;
+}
+.rounded{
+  border-radius: 7px;
+}
+/* Full-width input fields */
+input[type=text],select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 7px;
+}
+
+input[type=text]:focus , select:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+a {
+  color: dodgerblue;
+}
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+  appearance: none;
+}
+
+.media-body
+{ 
+  color: #04AA6D;
+  text-decoration: none;
+}
+.btn-user:hover
+{
+  text-decoration:  none;
+} 
+</style>
+<body class="w3-light-grey">
+    
+<div class="w3-bar w3-black w3-padding-large">
+  <a href="/" class="w3-bar-item w3-button rounded"><b>ADMIN DASHBOARD</b></a> 
+  <div class="w3-dropdown-hover w3-right">
+    <button class="w3-button w3-black"><b><%= email %></b></button>
+    <img class="mr-2 w3-circle" src="/img/avatar.jpg" width="40" height="40" alt="avatar">
+   
+    <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+      <a onclick="document.getElementById('edit-profile').style.display='block'" class="w3-bar-item w3-button w3-padding-large">Edit profile</a>
+      <!-- #region for edit profile of user--> 
+        <div id="edit-profile" class="w3-modal">
+          <div class="w3-modal-content w3-card-4">
+            <form action="#">
+                <header class="w3-container w3-teal">
+                  <span onclick="document.getElementById('edit-profile').style.display='none'"
+                  class="w3-button w3-display-topright w3-xlarge">&times;</span>
+                  <h2>EDIT PROFILE</h2>
+                </header>
+                <div class="container">
+                  <label for="name"><b>Username</b></label>
+                  <input type="text" value="current_name" name="name" id="name" required>
+                  <label for="about"><b>Description</b></label>
+                  <input type="text" placeholder="Enter course description" name="about" id="about" required> 
+                  <button type="submit" class="registerbtn">Edit profile</button>
+                </div>
+                 
+            </form>
+          </div>
+        </div> 
+      <a class="w3-bar-item w3-button w3-padding-large" onclick="logoutHandler()">Log out</a> 
+    </div>
+  </div>
+
+  <div class="w3-clear"></div>
+</div>
+
+
+
+<div class="w3-content" style="max-width:1400px">
+  <div class="w3-margin-top w3-container w3-padding-16 text-center">
+      <!-- <form action="/student/studentdetail" method="post"> -->
+        <form onsubmit="submitHandler(event);">
+          <label for="name"><b>Enter Student Credential -- [ email / Roll no ] :</b></label>
+          <input type="text"  name="student" id="email" placeholder="email/Roll No" required>
+          <button class="w3-button w3-green w3-border" style="float:right" type="submit" ><b>Find</b>  »</button>
+      </form> 
+      <% if(typeof stuemail !='undefined') {%>
+        NAME :  <b><%= stufirstname %> <%= stulastname %></b> <br>
+        EMAIL : <b><%= stuemail %></b><br>
+        ROLL NO :<b><%= sturollno %></b><br>     
+        CURRENT SEM :<b><%= stucursem %></b><br>
+        <%}%> 
+      <!-- onclick="findByEmail()"   -->
+  </div>
+   
+</div> 
+
+
+<!-- #region student details-->
+<% if(success === 1){ %>
+<div class="w3-content" style="max-width:1400px"> 
+  <div class="w3-container">         
+    <h2><b>TOTAL CREDITS: <%=totcredits%></b></h2>  
+    <table class="w3-table-all w3-margin-top" id="myTable">
+      <tr>  
+        <th style="width:20%;">COURSE</th>
+        <th style="width:20%;">ID</th>
+        <th style="width:20%;">SEM</th>
+        <th style="width:20%;">FEE</th>
+        <th style="width:20%;">CREDITS</th>
+        <th style="width:20%;">MARKS</th>
+      </tr>
+      <% results.forEach(result => { %>
+        <tr>
+          <td><%=result.course_name%></td>
+          <td><%=result.course_id%></td>
+          <td><%=result.sem%></td>
+          <td><%=result.fees%></td>
+          <td><%=result.credits%></td>
+          <td><%=result.marks%></td>
+        </tr>
+      <%})%>
+    </table> 
+  </div>    
+  <% } else if(success === 0){%>
+    <div class="w3-card-4 w3-margin w3-white w3-display-middle"> 
+      <div class="w3-container w3-padding-16">
+         User with the above mailId doesn't exists
+      </div>
+      </div>
+    <%} %>
+</body>
+
+<script>  
+    const modal1 = document.getElementById('edit');
+    const modal2 = document.getElementById('edit-profile'); 
+    const table = document.getElementById("myTable");    
+     
+     
+    window.onclick = function(event) {
+      if (event.target == modal || event.target == modal1 || event.target==modal2) {
+        modal.style.display = "none";
+        modal1.style.display = "none";
+        modal2.style.display = "none";
+      }
+    }
+
+    function submitHandler(event){
+      event.preventDefault();
+      const student = document.getElementById("email").value;
+      window.location.replace("/student/studentdetail/"+student);
+    }
+
+    function findByEmail()
+    {
+        const email = document.getElementById("email").value; 
+        //////////////////call the  student js post
+    }
+    async function handleError(res){
+      if(!res.ok){
+        res = await res.json()
+        throw new Error(res.msg)
+      }
+      else return res.json()
+    }
+
+    function logoutHandler(){
+      fetch('/logout')
+      .then(handleError)
+      .then(res => {
+        window.location.href = "/login"
+
+        // if the flwo comes here then logged out and redirected to login page
+      })
+      .catch(err => {
+        console.log(err);
+
+        // if the flow comes here then there is an error
+      })
+    }
+</script>
+</html>

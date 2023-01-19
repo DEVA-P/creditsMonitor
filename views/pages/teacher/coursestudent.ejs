@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<title>Teacher Dasboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">   
+<style>
+
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+.add-icon{
+    position: fixed;
+    bottom: 2.5%;
+    right: 2.5%;
+    z-index: 2; 
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+.material-icons
+{
+    font-size: 4rem; 
+    color: cadetblue;
+    cursor: pointer;
+}
+button
+{
+   background-color: transparent;
+   border: none;
+
+}
+* {
+  box-sizing: border-box;
+}
+.rounded{
+  border-radius: 7px;
+}
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=number], input[type=week],select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 7px;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=week]:focus, select:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+a {
+  color: dodgerblue;
+}
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+  appearance: none;
+}
+
+.media-body
+{ 
+  color: #04AA6D;
+  text-decoration: none;
+}
+.btn-user:hover
+{
+  text-decoration:  none;
+} 
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+</style>
+
+<body class="w3-light-grey">
+  <div class="add-icon">
+    <button onclick="newCourse();" >
+        <span class="material-icons">
+            add_circle
+        </span>
+    </button>
+  </div>
+      <div id="id01" class="w3-modal">
+        <div class="w3-modal-content w3-card-4">
+          <form id="course_form" onsubmit="formSubmitHandler(event);">
+              <header class="w3-container w3-teal">
+                <span onclick="document.getElementById('id01').style.display='none'"
+                class="w3-button w3-display-topright w3-xlarge">&times;</span>
+                <h2 id="form-title">COURSE CREATION</h2>
+              </header>
+              <div class="container">
+                <label for="course_name"><b>Course Name</b></label>
+                <input type="text" placeholder="Course Name" name="course_name" id="course_name" required>
+                <!-- <label for="Course Id"><b>Course Id</b></label>
+                <input type="text" placeholder="Course Id" value="NA" name="course_id" required> -->
+                <label for="about"><b>Description</b></label>
+                <input type="text" placeholder="Course Description" name="about" id="about" required>
+                <label for="credits"><b>Credits</b></label>
+                <input type="number" placeholder="Course Credits" name="credits" id="credits" required>
+                <label for="sem"><b>Semester</b></label>
+                <input type="number" placeholder="Semester" name="sem" id="sem" required>
+                <label for="Fees"><b>Fees</b></label>
+                <input type="number" placeholder="Fees" name="fees" required>
+                <label for="maxcount"><b>Maximum Capacity</b></label>
+                <input type="number" placeholder="Capacity" name="count" required>
+                <label for="faculty_type"><b>Faculty-type</b></label>
+                <div class="w3-row-padding ">
+                  <p class=" w3-half">
+                    <input class="w3-radio" type="radio" name="type" value="internal" checked>
+                    <label>Internal</label></p>
+                    <p  class=" w3-half">
+                    <input class="w3-radio" type="radio" name="type" value="external">
+                    <label>External</label></p>
+                </div>
+                <label for="duration"><b>Duration</b></label>
+                <select name="weeksDuration" id="duration">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <button type="submit" id="form-button" class="registerbtn rounded">Submit</button>
+              </div>
+              
+              <footer class="w3-container w3-teal">
+                <p>please verify before submission</p>
+              </footer>
+          </form>
+        </div>
+      </div>
+  <!-- ////////alert -->
+  <div class="alert" id="aler" >
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    <div id="text"></div> 
+  </div>
+
+<div class="w3-bar w3-black w3-padding-large">
+  <a href="/" class="w3-bar-item w3-button rounded"><b>TEACHERS DASHBOARD</b></a> 
+  <div class="w3-dropdown-hover w3-right">
+    <button class="w3-button w3-black"><b><%= email %></b></button>
+    <img class="mr-2 w3-circle" src="/img/avatar.jpg" width="40" height="40" alt="avatar">
+   
+    <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+      <a onclick="document.getElementById('edit-profile').style.display='block'" class="w3-bar-item w3-button w3-padding-large">Edit profile</a>
+      <!-- #region for edit profile of user--> 
+        <div id="edit-profile" class="w3-modal">
+          <div class="w3-modal-content w3-card-4">
+            <form action="#">
+                <header class="w3-container w3-teal">
+                  <span onclick="document.getElementById('edit-profile').style.display='none'"
+                  class="w3-button w3-display-topright w3-xlarge">&times;</span>
+                  <h2>EDIT PROFILE</h2>
+                </header>
+                <div class="container">
+                  <label for="name"><b>Username</b></label>
+                  <input type="text" value="current_name" name="name" id="name" required>
+                  <label for="about"><b>Description</b></label>
+                  <input type="text" placeholder="Enter course description" name="about" id="about" required> 
+                  <button type="submit" class="registerbtn">Edit profile</button>
+                </div>
+                 
+            </form>
+          </div>
+        </div> 
+      <a class="w3-bar-item w3-button w3-padding-large" onclick="logoutHandler()">Log out</a> 
+    </div>
+  </div>
+
+  <div class="w3-clear"></div>
+</div>
+
+<!-- #region student details-->
+<div class="w3-content" style="max-width:1400px"> 
+  <div class="w3-container">
+    <h2><%=course_name%></h2>
+    <p id="course_code"><%=course_id%></p>
+  
+    <input autofocus class="w3-input w3-border w3-padding" type="text" placeholder="Search for names.." id="myInput" onkeyup="myFunction()">
+    <div class="container">
+      <!-- <button type="submit" id="makecheckall" class="w3-button w3-black w3-round">ALL</button> -->
+      <!-- <button type="submit" id="passbutton" onclick="passStudents()" class="w3-button w3-green w3-round">PASS</button>
+      <button type="submit" id="failbutton" onclick="failStudents()" class="w3-button w3-red w3-round">FAIL</button> -->
+      <!-- <button type="submit" id="failbutton" onclick="addattendance()" class="w3-button w3-blue w3-round">ADD ATTENDANCE</button> -->
+      <button type="submit" id="failbutton" onclick="addmarks()" class="w3-button w3-yellow w3-round">ADD MARKS</button>
+      <button type="submit" id="submission" onclick="finish()" class="w3-button w3-round w3-teal w3-right">SUBMIT »</button>
+    </div>
+    <table class="w3-table-all w3-margin-top" id="myTable">
+      <tr>
+        <th style="width:20%;">RollNo</th>
+        <th style="width:20%;">Name</th>
+        <th style="width:20%;">Email</th>
+        <th style="width:20%;">Semester</th>
+        <th style="width:20%;">Marks (out of 100)</th>
+      </tr> 
+    </table> 
+  </div>
+  
+  <iframe name="iframe1" id="iframe1" src="https://docs.google.com/spreadsheets/d/1ccBcitFFoHbNeP_zQ9FS1ScIVNUbhP-QOD7QkXBue9w/edit?usp=sharing" 
+  frameborder="0" cellspacing="0"
+  style="border-style: none;margin-top: 100px;width: 100%; height: 80vh;"></iframe>
+  
+</body>
+<script> 
+  
+    document.getElementById('iframe1').style.display='none';
+    function addmarks(){ 
+      // document.getElementById('iframe1').style.display="block";
+      window.location.href = `/marks/${course_code}`;
+    }  
+    var msg= "";
+    var aler = document.getElementById("aler"); 
+    aler.style.display= "none";  
+    const text = document.getElementById('text');
+    const modal = document.getElementById('id01');
+    const modal1 = document.getElementById('edit');
+    const modal2 = document.getElementById('edit-profile');
+    const course_code = document.getElementById('course_code').innerHTML;
+    const table = document.getElementById("myTable");
+    // const checkAll = document.getElementById("check-all");
+    // const passbutton = document.getElementById("passbutton");
+    // const makecheckall = document.getElementById('makecheckall');
+
+    let students = [];
+    fetchStudents();
+
+    function fetchStudents(){
+      fetch(`/course/detail/${course_code}`,{
+        method: 'POST'
+      })
+      .then(handleError)
+      .then(res => {
+        students = res.results;
+        renderTable(students)
+      })
+      .catch(err => {
+        console.log(err)
+        aler.style.backgroundColor = "red"         
+        aler.style.display="block"; 
+        text.style.display="block"; 
+        text.innerHTML = "<strong>Danger!</strong>       "+"Error : "+err;       
+      })
+    }
+
+    function renderTable(students){
+      if(students.length==0){
+        table.innerHTML = '<div class="w3-card-4 w3-margin w3-white w3-display-middle"><div class="w3-container w3-padding-16 text-center">NO STUDENTS JOINED YET...</div></div>';
+      }
+      students.forEach((student,i) => {
+        let row = table.insertRow(i+1);
+        let cell1 = row.insertCell(0);
+        let cell2 = row.insertCell(1);
+        let cell3 = row.insertCell(2);
+        let cell4 = row.insertCell(3);
+        let cell5 = row.insertCell(4);
+        cell1.innerText = student.rollno;
+        cell2.innerText = student.name;
+        cell3.innerText = student.email;
+        cell4.innerText = student.sem;
+        cell5.innerText = student.marks
+      });
+    }
+     
+    window.onclick = function(event) {
+      if (event.target == modal || event.target == modal1 || event.target==modal2) {
+        modal.style.display = "none";
+        modal1.style.display = "none";
+        modal2.style.display = "none";
+      }
+    }
+
+    function formSubmitHandler(event){
+      event.preventDefault();
+      if(type === 'new')
+        courseCreationHandler();
+      else if(type === 'edit')
+        courseEditHandler();
+    }
+
+    const courseCreationHandler = (event) => {
+      const course_name = document.querySelector("[name='course_name']").value;
+      const about = document.querySelector("[name='about']").value;
+      const credits = document.querySelector("[name='credits']").value;
+      const sem = document.querySelector("[name='sem']").value;
+      const fees = document.querySelector("[name='fees']").value;
+      const weeksDuration = document.querySelector("[name='weeksDuration']").value;
+      const count = document.querySelector("[name='count']").value;
+      const staffType = (document.querySelector("[name='type']").value === "internal")?"0":"1";
+      console.log(weeksDuration)
+      const data = {
+        course_name,about,credits,sem,fees,weeksDuration,count,staffType
+      }
+      console.log(data);
+      fetch('/course_proposal',{
+        method: 'POST',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(data)
+      })
+      .then(handleError)
+      .then(res => {
+        console.log(res) 
+        modal.style.display = "none";
+        aler.style.display="block"; 
+        aler.style.background = "green";
+        text.style.display="block"; 
+        msg = "<strong>Success </strong>   Course Added Successfully";
+        text.innerHTML = msg;
+        setTimeout(() => {
+          location.reload();
+        },2000);
+      })
+      .catch(err =>{    
+        console.log(err) 
+        modal.style.display = "none";
+        aler.style.display="block"; 
+        text.style.display="block"; 
+        msg = "<strong>Danger !</strong>    "+err;
+        text.innerHTML = msg;
+      })
+
+    }
+
+    function newCourse(){
+      document.getElementById('id01').style.display='block'
+      type = 'new';
+      document.getElementById('course_form').reset();
+      formButton.innerText = 'Submit';
+      formTitle.innerText = 'COURSE CREATION';
+    }
+
+    async function handleError(res){
+      if(!res.ok){
+        res = await res.json()
+        throw new Error(res.msg)
+      }
+      else return res.json()
+    }
+
+    function finish(){
+      // alert(`${course_code}`)
+      fetch(`/course/finish/+${course_code}`)
+      .then(handleError)
+      .then(res => {
+        console.log(res) 
+        aler.style.backgroundColor = "green"         
+        aler.style.display="block"; 
+        text.style.display="block"; 
+        text.innerHTML = "<strong>Success!</strong>       "+"Course Updated and Completed Successfully";       
+
+      })
+      .catch(err => {
+        console.log(err) 
+        aler.style.backgroundColor = "red"         
+        aler.style.display="block"; 
+        text.style.display="block"; 
+        text.innerHTML = "<strong>Danger!</strong>       "+"Error : "+err;       
+
+      })
+    }
+
+    function logoutHandler(){
+      fetch('/logout')
+      .then(handleError)
+      .then(res => {
+        window.location.href = "/login"
+
+        // if the flwo comes here then logged out and redirected to login page
+      })
+      .catch(err => {
+        console.log(err);
+        console.log(err)
+        aler.style.backgroundColor = "red"         
+        aler.style.display="block"; 
+        text.style.display="block"; 
+        text.innerHTML = "<strong>Danger!</strong>       "+"Error : "+err;       
+
+      })
+    }
+    // document.getElementById("makecheckall").addEventListener('click')
+
+    // checkAll.addEventListener('change',(event) => {
+    //   let checkboxes = document.getElementsByClassName("w3-check");
+    //   if(checkAll.checked){
+    //     for(let i=0;i<checkboxes.length;i++)
+    //       checkboxes[i].checked = true;
+    //   }else{
+    //     for(let i=0;i<checkboxes.length;i++)
+    //     checkboxes[i].checked = false;
+    //   }
+    // })
+    // makecheckall.addEventListener('click',(event) => {
+    //   let checkboxes = document.getElementsByClassName("w3-check");
+    //   if(checkAll.checked){
+    //     for(let i=0;i<checkboxes.length;i++)
+    //       checkboxes[i].checked = false;
+    //   }else{
+    //     for(let i=0;i<checkboxes.length;i++)
+    //     checkboxes[i].checked = true;
+    //   }
+    // })
+    
+    
+
+    // function passStudents(){
+    //   let checkBoxes = document.querySelectorAll('.student-checkbox');
+    //   let studentsSelected = [];
+    //   let rows = document.querySelectorAll("tr");
+    //   checkBoxes.forEach((student,i) => {
+    //     if(student.checked && rows[i+1].cells[3].textContent === '0'){
+    //       studentsSelected.push(rows[i+1].cells[2].textContent);
+    //     }
+    //   })
+    //   fetch("/course/pass",{
+    //     method: 'POST',
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body:JSON.stringify({students:studentsSelected,course_code})
+    //   })
+    //   .then(handleError)
+    //   .then(res => {
+    //     console.log(res)
+    //     aler.style.backgroundColor = "green"         
+    //     aler.style.display="block"; 
+    //     text.style.display="block"; 
+    //     text.innerHTML = "<strong>Success!</strong>       "+"Made Pass Successfully - given full credits 100%";       
+
+    //     setTimeout(() => {
+    //       window.location.reload();
+    //     },3000);
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //     aler.style.backgroundColor = "red"         
+    //     aler.style.display="block"; 
+    //     text.style.display="block"; 
+    //     text.innerHTML = "<strong>Danger!</strong>       "+"Error : "+err;       
+
+    //   })
+    // }
+
+    // function failStudents(){
+    //   let checkBoxes = document.querySelectorAll('.student-checkbox');
+    //   let studentsSelected = [];
+    //   let rows = document.querySelectorAll("tr");
+    //   checkBoxes.forEach((student,i) => {
+    //     if(student.checked && rows[i+1].cells[3].textContent !== '0'){
+    //       studentsSelected.push(rows[i+1].cells[2].textContent);
+    //     }
+    //   })
+    //   fetch("/course/fail",{
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': "application/json"
+    //     },
+    //     body: JSON.stringify({students: studentsSelected,course_code})
+    //   })
+    //   .then(handleError)
+    //   .then(res => {
+    //     console.log(res)
+    //     aler.style.display="block"; 
+    //     text.style.display="block"; 
+    //     aler.style.backgroundColor="green"; 
+    //     text.innerHTML = "<strong>Success!</strong>       "+"Failed Successfully - credits given : 0";
+    //     setTimeout(() => {
+    //       window.location.reload();
+    //     },3000);
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //     console.log(err)
+    //     aler.style.backgroundColor = "red"         
+    //     aler.style.display="block"; 
+    //     text.style.display="block"; 
+    //     text.innerHTML = "<strong>Danger!</strong>       "+"Error : "+err;       
+
+    //   })
+    // }
+
+    ///////////for filterring table
+  function myFunction() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+</html>

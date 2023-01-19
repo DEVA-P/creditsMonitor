@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<title>STUDENT DASHBOARD</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif} 
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=number], input[type=week] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=week]:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+/* Set a style for the submit button */
+.registerbt {
+  background-color: #c8cccb;
+  color: rgb(0, 0, 0);
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+.registerbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+.media-body
+{ 
+  color: #04AA6D;
+  text-decoration: none;
+}
+.rounded{
+  border-radius: 7px;
+}
+.btn-user:hover
+{
+  text-decoration:  none;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+.notification {  
+  text-decoration: none; 
+  position: relative;
+  display: inline-block; 
+  border-radius: 2px;
+}
+
+.notification .badge { 
+  text-align: center;
+  display : block; 
+  position: absolute; 
+  top : 10px;
+  right: 10px;
+  padding: 1px 8px;
+  border-radius: 50%;
+  background-color: rgb(83, 84, 87);
+  color: white;
+}
+</style>
+<body class="w3-light-grey">
+  <div class="w3-bar w3-black w3-padding-large">
+  <a href="#" class="w3-bar-item w3-button rounded"><b>STUDENT'S DASHBOARD</b></a> 
+  <div class="w3-dropdown-hover w3-right">
+    <button class="w3-button w3-black rounded"><b><%=email%></b></button>
+    <img class="mr-2 w3-circle" src="img/avatar.jpg" width="40" height="40" alt="avatar">
+   
+    <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+      <a onclick="document.getElementById('edit-profile').style.display='block'" class="w3-bar-item w3-button w3-padding-large">Edit profile</a>
+      <!-- #region for edit profile of user--> 
+        <div id="edit-profile" class="w3-modal">
+          <div class="w3-modal-content w3-card-4">
+            <form action="#">
+                <header class="w3-container w3-teal">
+                  <span onclick="document.getElementById('edit-profile').style.display='none'"
+                  class="w3-button w3-display-topright w3-xlarge">&times;</span>
+                  <h2>EDIT PROFILE</h2>
+                </header>
+                <div class="container">
+                  <label for="name"><b>Username</b></label>
+                  <input type="text" value="current_name" name="name" id="name" required>
+                  <label for="about"><b>Description</b></label>
+                  <input type="text" placeholder="Enter course description" name="about" id="about" required> 
+                  <button type="submit" class="registerbtn">Edit profile</button>
+                </div>
+                 
+            </form>
+          </div>
+        </div> 
+      <a onclick="window.location.replace('/student/details');" class="w3-bar-item w3-button w3-padding-large notification">
+        <span> Credits</span><span class="badge"><%= totcredits%></span></a>
+      <a onclick="logoutHandler()" class="w3-bar-item w3-button w3-padding-large">Log out</a> 
+    </div>
+  </div>
+
+  <div class="w3-clear"></div>
+</div>
+<div class="alert" id="aler" >
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <div id="text"></div> 
+</div>
+<div class="w3-content" style="max-width:1400px"> 
+ 
+<header class="w3-container w3-center w3-padding-32"> 
+  <h1><b>COURSES OFFERED</b></h1>
+  <p>Welcome to the CREDIT COURSE MANAGEMENT SYSTEM</p>
+</header>
+ 
+<div id="enroll" class="w3-modal">
+  <div class="w3-modal-content w3-card-4">
+        <header class="w3-container w3-teal">
+          <span onclick="document.getElementById('enroll').style.display='none'"
+          class="w3-button w3-display-topright w3-xlarge">&times;</span>
+          <h2>Confirmation</h2>
+        </header>
+        <div class="container w3-row"> 
+          <p id="confirmation__content"></p>
+          <button type="submit" onclick="document.getElementById('enroll').style.display='none'" class="registerbt w3-col l4 ">cancel</button>
+          <button type="submit" id="enroll__button" class="registerbtn w3-col l4 w3-right">Enroll</button>
+        </div>
+  </div>
+</div> 
+<div class="w3-row">
+ 
+<div class="w3-col container s12" id="courses-container"> 
+
+  
+  <hr>
+</div>
+</body>
+<script>  
+
+var msg= "";
+  var aler = document.getElementById("aler"); 
+  aler.style.display= "none";  
+  const modal2 = document.getElementById('edit-profile');
+  const coursesContainer = document.getElementById("courses-container");
+  const confirmationContent = document.getElementById("confirmation__content");
+  const enrollButton = document.getElementById('enroll__button'); 
+  const modal3 = document.getElementById('enroll');
+  const text = document.getElementById('text');
+  const enrolledStatus = '<%-JSON.stringify(hasEnrolled)%>';
+  const enrollBtns = document.querySelectorAll('enroll-btn')
+  
+  let courses = [];
+
+  fetchCourses();
+
+  async function handleError(res){
+      if(!res.ok){
+        res = await res.json()
+        throw new Error(res.msg)
+      }
+      else
+        return res.json()
+    }
+
+  function enrollButtonCheck(avail,course_id,course_name){
+    if(avail === 1 && enrolledStatus == 0)
+    return `<p><button class="w3-button w3-padding-large w3-leftbar w3-white w3-border-green w3-border w3-text-right enroll-btn rounded" id="enrolling"
+              onclick="confirm(event,'${course_id}','${course_name}');"><b>ENROLL HERE »</b></button></p>`
+    return `<p><button class="w3-button w3-padding-large w3-leftbar w3-border-red w3-white w3-border w3-text-right enroll-btn rounded" id="enrolling" disabled><b>ENROLL HERE »</b></button></p>`
+  }
+
+  function fetchCourses(){
+    fetch('/course/student')
+    .then(handleError)
+    .then(res => {      
+      courses = res.courses;
+      console.log(courses)
+      if(courses.length === 0)
+        coursesContainer.innerHTML = "<p>You have no courses to enroll to</p>"
+      else{
+        let coursesHtml = ""
+        courses.forEach(course => {
+          let temp = `<div class="w3-card-4 w3-margin w3-white"> 
+        <div class="w3-container ">
+        <h3><b>${course.course_name} <h3 class="w3-right"><b>${course.currentCount}/${course.count}</b></h3> </b></h3> 
+        <h5>${course.course_id} <br><span class="w3-opacity">Course Credits: ${course.credits}</span></h5>
+        </div>
+
+        <div class="w3-container">
+        <p>${course.about.substring(0,200)}${course.about.length>200?"...":""}</p>
+        <div class="w3-row">
+            <div class="w3-col m8 s12">
+            `+enrollButtonCheck(course.avail,course.course_id,course.course_name)+`
+          </div>
+        </div>
+        </div>
+        </div>`
+        coursesHtml += temp
+        });
+        coursesContainer.innerHTML = coursesHtml;
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  async function handleError(res){
+      if(!res.ok){
+        res = await res.json()
+        throw new Error(res.msg)
+      }
+      else return res.json()
+    }
+  let fun;
+  function confirm(event,course_id,course_name){
+    if(fun)
+      enrollButton.removeEventListener("click",fun);
+    document.getElementById('enroll').style.display='block';
+    confirmationContent.innerHTML = "Are you sure you want to enroll on the course " + course_name;
+    fun = () => {enroll(event,course_id)}
+    enrollButton.addEventListener("click",fun)
+  }
+
+  function enroll(event,course_id){
+    let data = {course_id}
+    fetch("/enroll",{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(handleError)
+    .then(resp => { 
+      modal3.style.display = 'none';
+      msg = "<strong>Success!</strong>   Successfully been enrolled on the course";
+            aler.style.display = 'block';
+            aler.style.backgroundColor="green"; 
+            text.style.display="block";
+            text.innerHTML = msg;   
+      enrollBtns.forEach(btns => btns.disabled = true);
+      setTimeout(() => {
+        window.location.reload();
+      },3000);
+      // if the flow comes here then the student has successfully been enrolled on the course
+    })
+    .catch(err => {
+      console.log(err)
+      modal3.style.display = 'none';
+      document.getElementById("enrolling").disabled = true;
+      aler.style.display="block"; 
+      text.style.display="block"; 
+      text.innerHTML = "<strong>Danger!</strong>       "+err;
+    })
+  }
+
+  function logoutHandler(){
+      fetch('/logout')
+      .then(handleError)
+      .then(res => {        
+        window.location.href = "/login"
+      })
+      .catch(err => {
+        console.log(err);
+
+        // if the flow comes here then there is an error
+      })
+    }
+    
+    window.onclick = function(event) {
+    if (event.target==modal2 || event.target == modal3) { 
+      modal2.style.display = "none";
+      modal3.style.display = "none";
+    }
+  }
+</script>
+</html>

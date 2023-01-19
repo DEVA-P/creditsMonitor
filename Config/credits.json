@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "credits-monitoring",
+  "private_key_id": "d0ef621dd8953b181fc097f2d29263c7cceb5502",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC46LAYwsRTICfM\ntXI0vd26mnZ5GKnNwWJhwMUtTHp0SRVdHWIP417lo+7prUjjUABlq2XXD9RfiA7V\nRlQ5i53jGYHo/u/qE07wOnZ5poVTlXcVM56k90ioPwFf2EFwCtLd5C9YPAWJ//7v\npPPmR0dRmrXGBaGjN1DECai0ykuR7eVhJFhHIOvziMK/voIyyoJ338kprdNQE4Bt\nCl7ZXtwibXiHGrxM+wBQXfltt+5BfmcLuRE4bYjdXlQU54SR+K8p4eAenoAauCK0\n6+iwF6u2BQ9ImbsClhOhKuUy64FG89EBxY5VUraIZFlzxHetDnRa9QNihWb94vsn\nwPMlQ+frAgMBAAECggEATKg+tQ0tue53QYEphx79iMpXek2Uu9XDtRXnSKfPjlzs\nC+3OBRs0cMx9FAhAUuiMOZoMftOzriUoTRe6fB7bBlbBSjhCew6lJ6d9DWLRHD03\nIKWFTAuuZf200qjDPDFoiQ/75r7/Zt4nsO74JEwBj52tZRpZj+IzTApbFBRXrve0\nRpWqdJ153qrJ5we7R2U3xCGULpLSM5gKNd7CDtSIyjPBz/A4IbOi9ln2BgA7HJID\ngMMVfiuOxgFZeAf25XYjhCVJEZInvFWVUX8Y33ru6ljd9f4YupYotJ9AIGj42+4Y\nE4a4aGPQaHzA/5es1TAyAiXiJ/p4Kvm62Fype5p8fQKBgQD8KeG1wzLQu9gA4c2f\nZPo7NheVVT8MO5b/XT9j3exStiJIcO6MF1ABxm0USNgSYs0u7Msbq2YEYZ52+7L6\nheTsQZwg8mRc9oKq0xNebZkJOGVvOC9O8/3yL5CG7hjmCjB9vXvkAgkOLBuUBBQG\n/kEw3zw0bwsZTcWoVL6GrWvS3QKBgQC7uN1wSXcWmp0vu6gTok0h0s6q/hpbDvs+\n6b7uDwRHwHohN2Gd8pLfH/k2I4UbTFWC0FF2F7dWtr3UJMbHegyx36+UwTmaHgeO\neeivvIBkmipzci0yy7hncb6n75GJt6sWFOs9dW1tPfAouIgYLh7rneg6ZmHC+kYi\nIi0CZzbFZwKBgFYmINyuQZAafONgQZWxM+RCyK/WHeIaAa5gtyVxTim7296P5o+p\n70WL+vwxHtC5PIxJjeJ4HjRk/XR87Vq1n84vZB3FchBoj5+42ScrnlsOD2l98nuw\n1BOHuILAmXUOCh8LO2ZcY6eZ3holgooZF0CRI8puHYaZkWu++BCe8vVpAoGABPj4\npKjNhsPBtin6YcrC0EqNPupMOG1FKn12mUe8jUoD8i1NYKm0SkTGjTCTrg1vlm9+\nOOqX6KweiygOO+p3u555QC9+Hx78hEGmcEFGBWQwC67Sk63hzJuuuTQXXtaGqacU\nNCSQKXyih/GbaUiPeR5NsH5VyJxojy7okk+5m7ECgYEAvGcFMhkSssmmis+wn8jk\ndhE3wR9MO27Rc007TP51BLXRdD9JRCtWkQn9OWu5W9f3BvKPXqqnK7atwAM5JKOz\ncs1LtXYFjPF8o/qtvd0Q2+VbRvqlG08YVebr3sr1nFKteZN0vISh1Ykc1nVXyS6Z\nMndbzeQPFjWi417ugJJ9epg=\n-----END PRIVATE KEY-----\n",
+  "client_email": "credits-monitor@credits-monitoring.iam.gserviceaccount.com",
+  "client_id": "100473290914291612954",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/credits-monitor%40credits-monitoring.iam.gserviceaccount.com"
+}

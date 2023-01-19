@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+<style>
+body { 
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+}
+* {
+  box-sizing: border-box;
+} 
+.container {
+  padding: 16px;
+  background-color: white;
+} 
+
+input[type=text], input[type=password],.form-select, option,input[type=number] {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  font: normal 14px Verdana, Helvetica, sans-serif; 
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none; 
+}
+
+input[type=text]:focus, input[type=password]:focus,.form-select:focus,option:focus,input[type=number]:focus {
+  outline: none;
+} 
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+} 
+.registerbtn {
+  background-color: #0f04aa;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+} 
+a {
+  color: dodgerblue;
+} 
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+.outer
+{
+    max-width: 700px;
+}
+.full
+{
+    display: flex;
+    width: 100%;
+    justify-content: space-between; 
+}
+.half
+{
+    display: flex;
+    width: 40%;
+}
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+.ff
+{ 
+    color: gray;
+  font: normal 14px Verdana, Helvetica, sans-serif;
+}
+label{
+    color: black;
+}
+.outer
+{   
+    margin-top: 25px;
+    width: 100%; 
+    max-width: 700px;
+    
+} 
+@media screen and (max-width:700px) {
+    .outer{
+        width: 90%;
+    }
+}
+.container
+{
+  background-color: #f7f7f7;
+  border-radius: 15PX;
+}
+</style>
+</head>
+<body>
+
+<div class="outer">
+    <!-- LOGIN FORM -->
+    <%if(typeof msg != 'undefined') { %>         
+      <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <strong>Danger!</strong> <%= msg %> .
+
+          <% if(typeof redirect !='undefined'){ %> 
+              <script>
+                  window.location.replace("login");
+              </script>
+              <% } %> 
+        </div>
+      <%} %>
+    <form class="bg-success" action="/signup" method="post">  
+      <div class="container">
+        <h1>SIGN UP</h1> 
+        <hr>
+        
+        <label><b>Name</b></label>
+            <div class="full">
+                <div class="half">
+                  <input type="text" name="first_name"  placeholder="First name" <% if (typeof details !='undefined') {%>
+                    value="<%= details.first_name %>"                     
+                       <%} %>> 
+                </div>
+                <div class="half">
+                  <input type="text" name="last_name"  placeholder="Last name"<% if (typeof details !='undefined') {%>
+                    value="<%= details.last_name %>"                     
+                       <%} %>>
+                </div> 
+            </div>
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email"  id="email" required <% if (typeof details !='undefined') {%>
+            value="<%=details.email %>"                     
+               <%} %>>
+    
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" id="psw" required <% if (typeof details !='undefined') {%>
+            value="<%=details.password%>"                     
+               <%} %>>
+               
+        <!-- #region 
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat Password" name="password" id="psw-repeat" required>
+        -->     
+        <label><b>Department</b></label>    
+        <select class="form-select"  name="dept" id="inputGroupSelect02" required>
+            <option value="1">CSE</option>
+            <option value="2">ITE</option>
+            <option value="3">ECE</option>
+            <option value="4">EEE</option>
+            <option value="5">MECH </option>
+           <option value="6">CIVIL</option>
+        </select>  
+        <!-- #region student/teacher-->
+            <label><b>Current Position</b></label> 
+            <div class="container">
+            <label class="ff">
+                <input type="radio" checked="checked" value="0" name="optradio">  Student
+                <span class="checkmark"></span>
+            </label>
+            <label class="container ff">
+                <input type="radio" value="1" name="optradio">  Teacher
+                <span class="checkmark"></span>
+            </label>  
+        </div> 
+        <label><b>Roll Number</b></label><br>
+        <input type="text" name="rollno" placeholder="Roll number" />
+        
+        
+        <label><b>Semester</b></label><br>
+        <input type="number" name="sem" placeholder="sem"  /> 
+
+        <hr>
+    
+        <button type="submit" class="registerbtn">Register</button>
+        <div style="text-align: center;">
+             <p>Already have an account? <a href="/login">Sign in</a>.</p>
+        </div>
+      </div> 
+    </form>
+</div>
+
+</body>
+</html>
+ 

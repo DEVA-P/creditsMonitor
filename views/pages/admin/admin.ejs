@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<title>ADMIN Dasboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">   
+<style>
+
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  z-index: 2;
+  background-color: white;
+}
+.add-icon{
+    position: fixed;
+    bottom: 2.5%;
+    right: 2.5%;
+    z-index: 2; 
+}
+.material-icons
+{
+    font-size: 4rem; 
+    color: cadetblue;
+    cursor: pointer;
+}
+button
+{
+   background-color: transparent;
+   border: none;
+
+}
+* {
+  box-sizing: border-box;
+}
+.rounded{
+  border-radius: 7px;
+}
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=number], input[type=week],select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 7px;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=week]:focus, select:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+.alert {
+  padding: 20px;
+  background-color: green;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+.notification {
+  /* background-color: #555; */
+  color: white;
+  text-decoration: none; 
+  position: relative;
+  display: inline-block; 
+  border-radius: 2px;
+}
+
+.notification .badge { 
+  display : block;
+  z-index:10;
+  position: absolute; 
+  top : 6px;
+  right: 2px;
+  padding: 2px 8px;
+  border-radius: 50%;
+  background-color: rgb(83, 84, 87);
+  color: white;
+}
+</style> 
+<div class="add-icon">
+  <button onclick="window.location.replace('/admin/adduser');" >
+      <span class="material-icons">
+          add_circle
+      </span>
+  </button>
+</div> 
+<div class="w3-bar w3-black w3-padding-large">
+    <a href="/" class="w3-bar-item w3-button rounded"><b>ADMIN DASHBOARD</b></a> 
+    <div class="w3-dropdown-hover w3-right">
+      <button class="w3-button w3-black rounded"><b><%=email%></b></button>
+      <img class="mr-2 w3-circle" src="/img/avatar.jpg" width="40" height="40" alt="avatar">
+     
+      <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+        <a onclick="document.getElementById('edit-profile').style.display='block'" class="w3-bar-item w3-button w3-padding-large">Edit profile</a>
+        <!-- #region for edit profile of user--> 
+          <div id="edit-profile" class="w3-modal">
+            <div class="w3-modal-content w3-card-4">
+              <form action="#">
+                  <header class="w3-container w3-teal">
+                    <span onclick="document.getElementById('edit-profile').style.display='none'"
+                    class="w3-button w3-display-topright w3-xlarge">&times;</span>
+                    <h2>EDIT PROFILE</h2>
+                  </header>
+                  <div class="container">
+                    <label for="name"><b>Username</b></label>
+                    <input type="text" value="current_name" name="name" id="name" required>
+                    <label for="about"><b>Description</b></label>
+                    <input type="text" placeholder="Enter course description" name="about" id="about" required> 
+                    <button type="submit" class="registerbtn">Edit profile</button>
+                  </div>
+                   
+              </form>
+            </div>
+          </div> 
+        <a class="w3-bar-item w3-button w3-padding-large" onclick="logoutHandler()">Log out</a> 
+      </div>
+    </div>
+    
+  <div class="w3-clear"></div>
+</div>
+
+<!--ALERT --> 
+<div class="alert" id="aler" >
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <div id="text"></div> 
+</div>
+<!--ALERT -->
+
+<div class="w3-container w3-width-500px">
+    <h2>BATCH <%= new Date().getFullYear();%></h2>
+    <button class="w3-button  w3-border w3-green" style="float: right;" onclick="window.location.replace('/student/studentdetail');"><b>Find Student</b>  »</button> 
+    <button class="w3-button w3-white w3-border w3-light-grey" style="float: right;" onclick="promoteStudents()"><b>Promote Students Sem</b>  »</button> 
+    <button class="w3-button  w3-border w3-green" style="float: right;" onclick="window.location.replace('/admin/enrollment');"><b>Active Student</b>  »</button> 
+    <div id="topActive"></div>
+    <p>total courses completed: <%= count %></p>
+
+    <!-- #to propose the course by admin-->          
+    <div id="proposebutton" class="w3-modal">
+      <div class="w3-modal-content w3-card-4">
+        <form onsubmit="approveCourse(event);">
+            <header class="w3-container w3-teal">
+              <span onclick="document.getElementById('proposebutton').style.display='none'"
+              class="w3-button w3-display-topright w3-xlarge">&times;</span>
+              <h2>COURSE VERIFICATION</h2>
+            </header>
+            <div class="container">
+              <label for="code"><b>Course Code</b></label>
+              <input type="text" minlength="8" maxlength="8"  placeholder="eg: 8Ad2de" name="code" id="code" required> 
+              <button class="registerbtn">APPROVE</button>
+            </div>
+         </form>
+      </div>
+    </div>
+  <!-- #to propose the course by admin top |||||-->  
+
+    <div class="w3-bar w3-black">
+      <button class="w3-bar-item tablink  w3-left-align notification" style="width:130px" id= "propose" onclick="openCity(event,'assigned')"></button>
+      <button class="w3-bar-item tablink  w3-block-align notification" style="width:130px" id="active" onclick="openCity(event,'proposed')"></button> 
+      <button class="w3-bar-item w3-button tablink w3-right" onclick="window.location.href='/course/all'">COMPLETED</button> 
+    </div>
+    
+    <div id="assigned" class="w3-container w3-border city">      
+    </div>   
+    <div id="proposed" class="w3-container w3-border city" style="display:none">
+
+  </div>
+</div>
+  
+  <script>
+  let courses = [];
+  var msg= ""; 
+  let activeCount = 0;
+  let selectedCourseId = -1;
+  const aler = document.getElementById('aler');
+  aler.style.display= "none";  
+  const assignedTab = document.getElementById("assigned");
+  const acceptedTab = document.getElementById("proposed");
+  const active = document.getElementById("active");
+  const proposed = document.getElementById("propose");
+  const proposebutton = document.getElementById("proposebutton");
+  const topActive = document.getElementById("topActive");
+  const modal1 = document.getElementById('edit-profile'); 
+  const text = document.getElementById('text');
+  acceptedTab.innerHTML = `<br><label for="filtersem"><b>Filter By Sem</b></label>
+                <select name="filtersem" id="filtersem" onchange='changed(this.value)'>
+                  <option value="all">all</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                </select>`;
+
+  fetchCourses();
+  function changed(value){ 
+    courses.forEach(course => { 
+      
+        if(course.course_id!=='NA' && value === 'all' || parseInt(course.sem) === parseInt(value))
+        document.getElementById(course.course_id).style.display = "block";
+        else
+        document.getElementById(course.course_id).style.display = "none";
+      // console.log(course.sem);}
+      });
+  }
+  function openCity(evt, cityName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("city");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " w3-red";
+  }      
+    window.onclick = function(event) {
+      if (event.target == modal1 || event.target == proposebutton) {
+          proposebutton.style.display = "none";
+          modal1.style.display = "none"; 
+      }
+    }
+
+    async function handleError(res){
+      if(!res.ok){
+        res = await res.json()
+        throw new Error(res.msg)
+      }
+      else return res.json()
+    }
+
+    function logoutHandler(){
+      fetch('/logout')
+      .then(handleError)
+      .then(res => {        
+        window.location.href = "/login" 
+      })
+      .catch(err => {
+        console.log(err); 
+
+      })
+    }
+
+    function fetchCourses(){
+      fetch("/course/admin")
+      .then(handleError)
+      .then(res => {
+        courses = res.courses;
+        renderCourses();
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+
+    function approveCoursePopUp(id){
+      selectedCourseId = id;
+      proposebutton.style.display = 'block';
+    }
+
+    function renderCourses(){
+      let assigned = "";
+      let accepted = "";
+      let completeaccept = "";
+      let proposedCount = 0;
+      console.log(courses);
+      courses.forEach(course => {
+        if(course.course_id === 'NA'){
+          proposedCount++;
+          assigned += `<div class="w3-card-4 w3-margin w3-white"> 
+          <div class="w3-container">
+            <h3><b>${course.course_name}</b></h3>
+            <h5>Credits : ${course.credits}</h5>
+          </div>
+  
+          <div class="w3-container">
+            <p>${course.about.substring(0,200) + "..."}</p>
+            <div class="w3-bar"> 
+                <button class="w3-button w3-padding-large w3-leftbar w3-round w3-border-green w3-white w3-border" onclick="approveCoursePopUp(${course.id})"><b>APPROVE »</b></button>
+                <button class="w3-button w3-padding-large w3-leftbar w3-round w3-border-red w3-white w3-border" onclick="rejectCoursePopUp(${course.id})"><b>REJECT »</b></button><p></p>
+            </div>
+          </div> 
+          </div>`
+        }else{
+          activeCount++;
+          if(course.isactive==1)
+          accepted += `<div class="w3-card-4 w3-margin w3-white w3-border w3-border-yellow" id="${course.course_id}"> 
+          <div class="w3-container">
+            <h3><b>${course.course_name}</b></h3>
+            <h5>${course.course_id}<br> <span class="w3-opacity">  Credits : ${course.credits} / Sem : ${course.sem}</span></h5>
+          </div>
+  
+          <div class="w3-container">
+            <p>${course.about.substring(0,200) + "..."}</p>
+            <div class="w3-row">
+              <div class="w3-col m8 s12">
+              <p><button class="w3-button w3-padding-large w3-white w3-border float-right" onclick="window.location.href='/course/admin/detail/${course.course_id}'"><b>VIEW »</b></button></p>
+            </div> 
+          </div>
+          </div>
+          </div>`
+          else 
+          completeaccept+= `<div class="w3-card-4 w3-margin w3-white w3-border w3-border-green"> 
+          <div class="w3-container">
+            <h3><b>${course.course_name}</b></h3>            
+            <p><button class="w3-button w3-padding-large w3-white w3-border w3-right" onclick="inActivate('${course.course_id}')"><b>INACTIVATE »</b></button></p>
+            <h5>${course.course_id}<br> <span class="w3-opacity">  Credits : ${course.credits}  / Sem : ${course.sem}</span></h5>
+          </div>
+  
+          <div class="w3-container">
+            <p>${course.about.substring(0,200) + "..."}</p>
+            <div class="w3-row">
+              <div class="w3-col m8 s12">
+              <p><button class="w3-button w3-padding-large w3-white w3-border" onclick="window.location.href='/course/admin/detail/${course.course_id}'"><b>VIEW »</b></button></p>
+            </div> 
+          </div>
+          </div>
+          </div>`
+        }
+      })
+      if(activeCount==0){
+        accepted = `<div class="w3-card-4 w3-margin w3-white w3-display-middle"> 
+          <div class="w3-container w3-padding-16 text-center">
+             NO COURSES ARE ACTIVE YET.
+          </div>
+          </div>`
+      }
+      if(proposedCount==0){
+        assigned = `<div class="w3-card-4 w3-margin w3-white w3-display-middle"> 
+          <div class="w3-container w3-padding-16">
+             NO COURSES ARE PROPOSED YET.
+          </div>
+          </div>`
+      }    
+
+      assignedTab.innerHTML = assigned; 
+      acceptedTab.innerHTML += completeaccept;
+      acceptedTab.innerHTML += accepted;
+      active.innerHTML = `<span>ACTIVE     </span><span class="badge">${activeCount}</span>`;
+      topActive.innerHTML = "Total active courses: "+ activeCount;
+      proposed.innerHTML = `<span>PROPOSED   </span><span class="badge">${proposedCount}</span>`;
+
+    } 
+
+    function rejectCoursePopUp(course_id){
+      rejectCourse(course_id);
+    }
+
+    function rejectCourse(course_id){
+      fetch("/course/reject",{
+        method: 'POST',
+        headers: {
+          "Content-Type" : 'application/json'
+        },
+        body: JSON.stringify({id: course_id})
+      })
+      .then(handleError)
+      .then(res => {
+        console.log(res);
+        // successfully deleted
+        setTimeout(() => {
+          window.location.reload();
+        },3000);
+      })
+      .catch(err => {
+        console.log(err)
+        // something went wrong in the server side
+      })
+    }
+
+    function inActivate(course_code)
+    {
+      console.log(course_code)
+      fetch('/admin/inactivate',{
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({course_code})
+      })
+      .then(handleError)
+      .then(res => {
+        console.log(res);
+        msg = "<strong>Success!</strong>   Successfully inactivated";
+        aler.style.display="block";
+        text.style.display="block";
+        text.innerHTML = msg;
+        setTimeout(() => {
+          window.location.reload();
+        },3000);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+
+    function approveCourse(event){
+      event.preventDefault();
+      const id = selectedCourseId;
+      fetch('/course/approve/'+id,{
+        method: 'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({course_id: document.getElementById('code').value})
+      })
+      .then(handleError)
+      .then(res => {
+        // success message
+        proposebutton.style.display = 'none';
+        msg = "<strong>Success!</strong>   Successfully approved the course";
+        aler.style.display="block";
+        text.style.display="block";
+        aler.style.backgroundColor="green";
+        text.innerHTML = msg;
+        setTimeout(function(){
+          location.reload();
+        },3000);
+      })
+      .catch(err => {
+        proposebutton.style.display = 'none';
+        msg = "<strong>Danger!</strong>  "+err ;
+        aler.style.display="block";
+        aler.style.backgroundColor="#f44336";
+        text.style.display="block";
+        text.innerHTML = msg;
+        console.log(err);  
+      })
+    }
+    function promoteStudents(){
+      // window.location.replace('admin/promotestudents');
+      if(activeCount!=0){
+        msg = "<strong>Danger!</strong>  It seems that some courses are still Active";
+        aler.style.display="block";
+        aler.style.backgroundColor="#f44336";
+        text.style.display="block";
+        text.innerHTML = msg;
+        return;
+      }
+      fetch("/admin/promotestudents")
+      .then(handleError)
+      .then(res => {
+        console.log(res);msg = "<strong>Danger!</strong>  Successfully Promoted all the students to the Next Semester";
+        aler.style.display="block";
+        aler.style.backgroundColor="green";
+        text.style.display="block";
+        text.innerHTML = msg;
+      })
+      .catch(err => {
+        console.log(err);
+      } )
+    }
+  </script>
+  
+  
+</body> 
+</html>
